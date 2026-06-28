@@ -73,7 +73,7 @@ const Feedback = ({ params }) => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-6 md:p-10">
+    <div className="mx-auto max-w-5xl p-4 sm:p-6 md:p-10">
       {feedbackList.length === 0 ? (
         <h2 className="my-5 text-xl font-semibold text-muted-foreground">
           No interview feedback record found.
@@ -159,10 +159,10 @@ const Feedback = ({ params }) => {
               <table className="w-full text-left text-sm">
                 <thead className="border-b border-border text-muted-foreground">
                   <tr>
-                    <th className="px-5 py-3 font-medium">#</th>
-                    <th className="px-5 py-3 font-medium">Question</th>
-                    <th className="px-5 py-3 font-medium">Rating</th>
-                    <th className="px-5 py-3 font-medium">Status</th>
+                    <th className="px-3 py-3 font-medium sm:px-5">#</th>
+                    <th className="px-3 py-3 font-medium sm:px-5">Question</th>
+                    <th className="px-3 py-3 font-medium sm:px-5">Rating</th>
+                    <th className="px-3 py-3 font-medium sm:px-5">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -170,12 +170,12 @@ const Feedback = ({ params }) => {
                     const r = Number(item.rating) || 0;
                     return (
                       <tr key={index} className="border-b border-border/60 last:border-0">
-                        <td className="px-5 py-3 text-muted-foreground">{index + 1}</td>
-                        <td className="max-w-md truncate px-5 py-3">{item.question}</td>
-                        <td className="px-5 py-3 font-semibold" style={{ color: ratingColor(r) }}>
+                        <td className="px-3 py-3 text-muted-foreground sm:px-5">{index + 1}</td>
+                        <td className="max-w-[130px] truncate px-3 py-3 sm:max-w-md sm:px-5">{item.question}</td>
+                        <td className="px-3 py-3 font-semibold sm:px-5" style={{ color: ratingColor(r) }}>
                           {r}/10
                         </td>
-                        <td className="px-5 py-3">
+                        <td className="px-3 py-3 sm:px-5">
                           <span
                             className="rounded-full px-2.5 py-1 text-xs font-medium"
                             style={{
@@ -200,7 +200,7 @@ const Feedback = ({ params }) => {
           </h3>
           {feedbackList.map((item, index) => (
             <Collapsible key={index} className="mt-3">
-              <CollapsibleTrigger className="glass-card flex w-full justify-between gap-7 rounded-xl p-4 text-left transition-colors hover:bg-secondary/40">
+              <CollapsibleTrigger className="glass-card flex w-full items-center justify-between gap-3 rounded-xl p-4 text-left transition-colors hover:bg-secondary/40 sm:gap-7">
                 <span className="font-medium">{item.question}</span>
                 <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
               </CollapsibleTrigger>

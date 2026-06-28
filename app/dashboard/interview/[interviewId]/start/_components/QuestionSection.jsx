@@ -13,7 +13,7 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
   return (
     mockInterviewQuestion && (
       <div className=" flex flex-col justify-between p-5 border rounded-lg my-1 bg-secondary">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 ">
           {mockInterviewQuestion &&
             mockInterviewQuestion.map((question, index) => (
               <h2
@@ -27,7 +27,7 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
               </h2>
             ))}
         </div>
-        <h2 className="my-5 text-md md:text-lg">
+        <h2 className="my-5 text-base leading-snug md:text-lg">
           {mockInterviewQuestion[activeQuestionIndex]?.Question}
         </h2>
         <Volume2
@@ -36,7 +36,7 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
             textToSpeech(mockInterviewQuestion[activeQuestionIndex]?.Question)
           }
         />
-        <div className="border rounded-lg p-5 bg-blue-100 mt-18 md:block hidden">
+        <div className="border rounded-lg p-5 bg-blue-100 mt-6 md:block hidden">
           <h2 className="flex gap-2 items-center text-blue-800">
             <Lightbulb />
             <strong>Note:</strong>

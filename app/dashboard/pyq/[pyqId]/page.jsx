@@ -37,7 +37,7 @@ const page = ({ params }) => {
 
   if (loading) {
     return (
-      <div className="p-10 my-5 flex flex-col gap-4">
+      <div className="p-4 sm:p-6 md:p-10 my-5 flex flex-col gap-4">
         <Skeleton className="h-14 w-full rounded-md" />
         <Skeleton className="h-14 w-full rounded-md" />
         <Skeleton className="h-14 w-full rounded-md" />
@@ -46,7 +46,7 @@ const page = ({ params }) => {
   }
 
   return (
-    <div className="p-10 my-5">
+    <div className="p-4 sm:p-6 md:p-10 my-5">
       {questionData && questionData.length > 0 ? (
         <Accordion type="single" collapsible>
           {questionData.map((item, index) => (

@@ -11,8 +11,10 @@ Built with Next.js, Tailwind CSS, MongoDB, and the Google Gemini API.
 - **Voice answers** — record spoken answers that are transcribed automatically.
 - **Instant feedback** — each answer is rated out of 10 with actionable, written feedback.
 - **Visual analytics** — an overall score gauge, per-question rating chart, and a summary table give a clear picture of your performance.
+- **AI Quiz Arena** — a gamified rapid-fire quiz: pick a tech topic, answer AI-generated multiple-choice questions, earn points and keep your hearts, and climb a global leaderboard.
 - **Personalized experience** — questions adapt to job role, description, and experience level.
 - **History** — revisit your previous mock interviews and feedback any time.
+- **Polished, responsive UI** — an Apple-inspired glassmorphism design that works seamlessly on both desktop and mobile.
 
 ## Tech Stack
 
@@ -22,6 +24,7 @@ Built with Next.js, Tailwind CSS, MongoDB, and the Google Gemini API.
 - **Google Gemini API** — powers question generation, resume analysis, feedback, and audio transcription.
 - **Clerk** — authentication and user management.
 - **Recharts** — feedback visualizations.
+- **Framer Motion & react-icons** — animations and brand logos in the Quiz Arena.
 
 ## Getting Started
 
@@ -48,17 +51,12 @@ Built with Next.js, Tailwind CSS, MongoDB, and the Google Gemini API.
    CLERK_SECRET_KEY=your_clerk_secret_key
    ```
 
-5. (Optional) Seed starter practice courses:
-   ```bash
-   npm run db:seed
-   ```
-
-6. Start the development server:
+5. Start the development server:
    ```bash
    npm run dev
    ```
 
-7. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Usage
 

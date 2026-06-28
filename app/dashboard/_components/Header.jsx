@@ -10,7 +10,8 @@ import Link from "next/link";
 const navItems = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/dashboard/question", label: "Questions" },
-  { href: "/dashboard/game", label: "Gaming" },
+  { href: "/dashboard/game", label: "Quiz Arena" },
+  { href: "/dashboard/leaderboard", label: "Leaderboard" },
   { href: "/dashboard/upgrade", label: "Upgrade" },
   { href: "/dashboard/howit", label: "How it works?" },
 ];

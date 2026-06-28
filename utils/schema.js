@@ -67,72 +67,15 @@ const NewsletterSchema = new Schema(
   { timestamps: true }
 );
 
-/* ------------------------- Gamified learning system ---------------------- */
-const CourseSchema = new Schema(
-  {
-    title: { type: String, required: true },
-    imageSrc: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-const UnitSchema = new Schema(
-  {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    courseId: { type: Schema.Types.ObjectId, ref: "Course", required: true },
-    order: { type: Number, required: true },
-  },
-  { timestamps: true }
-);
-
-const LessonSchema = new Schema(
-  {
-    title: { type: String, required: true },
-    unitId: { type: Schema.Types.ObjectId, ref: "Unit", required: true },
-    order: { type: Number, required: true },
-  },
-  { timestamps: true }
-);
-
-const ChallengeSchema = new Schema(
-  {
-    lessonId: { type: Schema.Types.ObjectId, ref: "Lesson", required: true },
-    type: { type: String, enum: ["SELECT", "ASSIST"], required: true },
-    duoQuestion: { type: String, required: true },
-    order: { type: Number, required: true },
-  },
-  { timestamps: true }
-);
-
-const ChallengeOptionSchema = new Schema(
-  {
-    challengeId: { type: Schema.Types.ObjectId, ref: "Challenge", required: true },
-    text: { type: String, required: true },
-    correct: { type: Boolean, required: true },
-    imageSrc: { type: String },
-    audioSrc: { type: String },
-  },
-  { timestamps: true }
-);
-
-const ChallengeProgressSchema = new Schema(
-  {
-    userId: { type: String, required: true, index: true },
-    challengeId: { type: Schema.Types.ObjectId, ref: "Challenge", required: true },
-    completed: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);
-
+/* ----------------------- Quiz Arena player progress ---------------------- */
 const UserProgressSchema = new Schema(
   {
     userId: { type: String, required: true, unique: true, index: true },
-    userName: { type: String, default: "User" },
+    userName: { type: String, default: "Player" },
     userImageSrc: { type: String, default: "/logo.svg" },
-    activeCourseId: { type: Schema.Types.ObjectId, ref: "Course", default: null },
-    hearts: { type: Number, default: 5 },
-    points: { type: Number, default: 0 },
+    points: { type: Number, default: 0, index: true },
+    gamesPlayed: { type: Number, default: 0 },
+    bestScore: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -141,10 +84,4 @@ export const MockInterview = model("MockInterview", MockInterviewSchema, "mockIn
 export const Question = model("Question", QuestionSchema, "questions");
 export const UserAnswer = model("UserAnswer", UserAnswerSchema, "userAnswers");
 export const Newsletter = model("Newsletter", NewsletterSchema, "newsletters");
-export const Course = model("Course", CourseSchema, "courses");
-export const Unit = model("Unit", UnitSchema, "units");
-export const Lesson = model("Lesson", LessonSchema, "lessons");
-export const Challenge = model("Challenge", ChallengeSchema, "challenges");
-export const ChallengeOption = model("ChallengeOption", ChallengeOptionSchema, "challengeOptions");
-export const ChallengeProgress = model("ChallengeProgress", ChallengeProgressSchema, "challengeProgress");
 export const UserProgress = model("UserProgress", UserProgressSchema, "userProgress");

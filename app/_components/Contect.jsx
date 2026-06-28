@@ -48,9 +48,9 @@ const Contect = () => {
   };
 
   return (
-    <div className="container mx-auto text-center">
-      <h2 className="text-4xl font-bold text-gray-800">Get In Touch</h2>
-      <p className="mt-4 text-lg text-gray-600">
+    <div className="container mx-auto px-2 text-center">
+      <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Get In Touch</h2>
+      <p className="mt-4 text-lg text-muted-foreground">
         Have any questions? Reach out to us and we&apos;ll get back to you as
         soon as possible.
       </p>

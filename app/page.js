@@ -35,12 +35,12 @@ const testimonials = [
   {
     quote:
       'The AI mock interviews were incredibly helpful. I felt much more confident going into my real interview.',
-    name: 'Alex Johnson',
+    name: 'Aniket Kundal',
   },
   {
     quote:
       'The feedback was spot on and the resume analysis showed exactly what to prepare. Highly recommend!',
-    name: 'Sarah Williams',
+    name: 'Gautam Lasgotra',
   },
 ];
 
@@ -69,12 +69,12 @@ const page = () => {
         </header>
 
         {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center px-6 py-28 text-center md:py-36">
+        <section className="relative flex flex-col items-center justify-center px-4 py-20 text-center sm:px-6 md:py-32">
           <div className="glass-card mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground">
             <Sparkles className="h-4 w-4 text-accent" />
             Powered by AI
           </div>
-          <h2 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+          <h2 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-6xl">
             Ace Your Next <span className="text-gradient">Interview</span>
           </h2>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">

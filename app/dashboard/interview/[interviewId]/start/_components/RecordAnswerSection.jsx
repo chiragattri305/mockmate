@@ -115,7 +115,7 @@ const RecordAnswerSection = ({
 
   return (
     <div className="flex flex-col items-center justify-center overflow-hidden">
-      <div className="flex flex-col justify-center items-center rounded-lg p-5 bg-black mt-4 w-[30rem]">
+      <div className="flex flex-col justify-center items-center rounded-lg p-5 bg-black mt-4 w-full max-w-[30rem]">
         {webCamEnabled ? (
           <Webcam
             mirrored={true}
@@ -132,7 +132,7 @@ const RecordAnswerSection = ({
       </div>
 
       {userAnswer && (
-        <div className="mt-4 p-3 bg-gray-100 rounded-lg w-[30rem] text-sm text-gray-700">
+        <div className="mt-4 p-3 bg-gray-100 rounded-lg w-full max-w-[30rem] text-sm text-gray-700">
           <strong>Your answer:</strong> {userAnswer}
         </div>
       )}
