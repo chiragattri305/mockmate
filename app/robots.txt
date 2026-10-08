@@ -5,4 +5,4 @@ Allow: /
 Disallow: /dashboard/
 Disallow: /api/
 
-Sitemap: https://mockmate.vercel.app/sitemap.xml
+Sitemap: https://mockmate-ten-lac.vercel.app/sitemap.xml

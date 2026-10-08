@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
 
@@ -17,7 +17,9 @@ export async function GET(request, { params }) {
     }
 
     await connectDB();
-    const result = await MockInterview.findOne({ mockId: id }).lean();
+    const user = await currentUser();
+    const userEmail = user?.primaryEmailAddress?.emailAddress ?? "";
+    const result = await MockInterview.findOne({ mockId: id, createdBy: userEmail }).lean();
 
     if (!result) {
       return NextResponse.json({ error: "Interview not found" }, { status: 404 });

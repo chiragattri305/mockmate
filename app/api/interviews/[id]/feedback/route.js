@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/utils/db";
 import { UserAnswer } from "@/utils/schema";
 
@@ -17,7 +17,9 @@ export async function GET(request, { params }) {
     }
 
     await connectDB();
-    const result = await UserAnswer.find({ mockIdRef: id })
+    const user = await currentUser();
+    const userEmail = user?.primaryEmailAddress?.emailAddress ?? "";
+    const result = await UserAnswer.find({ mockIdRef: id, userEmail })
       .sort({ _id: 1 })
       .lean();
 

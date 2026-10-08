@@ -70,6 +70,7 @@ const QuizArena = () => {
   const [streak, setStreak] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [savedTotals, setSavedTotals] = useState(null);
+  const [saveFailed, setSaveFailed] = useState(false);
   const savedRef = useRef(false);
 
   const startQuiz = async (topicName) => {
@@ -93,6 +94,7 @@ const QuizArena = () => {
       setStreak(0);
       setCorrectCount(0);
       setSavedTotals(null);
+      setSaveFailed(false);
       savedRef.current = false;
       setPhase("play");
     } catch (err) {
@@ -138,7 +140,7 @@ const QuizArena = () => {
       savedRef.current = true;
       saveQuizResult(points)
         .then(setSavedTotals)
-        .catch(() => {});
+        .catch(() => setSaveFailed(true));
     }
   }, [phase, points]);
 
@@ -237,7 +239,9 @@ const QuizArena = () => {
               · Best game: <strong className="text-foreground">{savedTotals.bestScore}</strong>
             </p>
           ) : (
-            <p className="mb-6 text-sm text-muted-foreground">Saving your score…</p>
+            <p className="mb-6 text-sm text-muted-foreground">
+              {saveFailed ? "Could not save your score this time." : "Saving your score…"}
+            </p>
           )}
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">

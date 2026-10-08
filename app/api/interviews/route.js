@@ -2,22 +2,13 @@ import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
-import { createChatSession } from "@/utils/GeminiAIModal";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateText, parseAiJson } from "@/utils/GeminiAIModal";
 import { rateLimit } from "@/utils/rateLimit";
 import { v4 as uuidv4 } from "uuid";
 
-const sanitize = (str) => String(str ?? "").replace(/[<>{}]/g, "").trim().substring(0, 500);
+export const maxDuration = 60;
 
-// Strip markdown fences and parse the model's JSON output.
-function parseAiJson(responseText) {
-  const cleaned = responseText
-    .replace(/```json/gi, "")
-    .replace(/```/g, "")
-    .replace(/^\s*[\r\n]/gm, "")
-    .trim();
-  return JSON.parse(cleaned);
-}
+const sanitize = (str) => String(str ?? "").replace(/[<>{}]/g, "").trim().substring(0, 500);
 
 function validateQuestions(questions) {
   if (!Array.isArray(questions) || questions.length === 0) return false;
@@ -57,8 +48,8 @@ export async function POST(request) {
         if (resume.type !== "application/pdf") {
           return NextResponse.json({ error: "Resume must be a PDF file." }, { status: 400 });
         }
-        if (resume.size > 5 * 1024 * 1024) {
-          return NextResponse.json({ error: "Resume must be under 5MB." }, { status: 400 });
+        if (resume.size > 4 * 1024 * 1024) {
+          return NextResponse.json({ error: "Resume must be under 4MB." }, { status: 400 });
         }
         const bytes = Buffer.from(await resume.arrayBuffer());
         resumeBase64 = bytes.toString("base64");
@@ -106,16 +97,14 @@ Respond with ONLY valid JSON in this exact shape:
   "resumeAnalysis": "..."
 }`;
 
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-      const aiResult = await model.generateContent([
-        { text: prompt },
-        { inlineData: { mimeType: "application/pdf", data: resumeBase64 } },
-      ]);
+      const aiText = await generateText(
+        [{ text: prompt }, { inlineData: { mimeType: "application/pdf", data: resumeBase64 } }],
+        { json: true }
+      );
 
       let parsed;
       try {
-        parsed = parseAiJson(aiResult.response.text());
+        parsed = parseAiJson(aiText);
       } catch {
         return NextResponse.json(
           { error: "Failed to parse AI response. Please try again." },
@@ -140,10 +129,9 @@ Please provide a valid JSON array with this exact format:
 
 Keep questions professional and relevant to the job requirements.`;
 
-      const session = createChatSession();
-      const aiResult = await session.sendMessage(prompt);
+      const aiText = await generateText(prompt, { json: true });
       try {
-        questions = parseAiJson(aiResult.response.text());
+        questions = parseAiJson(aiText);
       } catch {
         return NextResponse.json(
           { error: "Failed to parse AI response. Please try again." },
@@ -152,6 +140,7 @@ Keep questions professional and relevant to the job requirements.`;
       }
     }
 
+    if (!Array.isArray(questions) && Array.isArray(questions?.questions)) questions = questions.questions;
     if (!validateQuestions(questions)) {
       return NextResponse.json(
         { error: "Invalid AI response format. Please try again." },

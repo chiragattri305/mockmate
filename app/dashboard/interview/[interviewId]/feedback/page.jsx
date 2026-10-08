@@ -51,7 +51,7 @@ const Feedback = ({ params }) => {
 
   const overallRating = useMemo(() => {
     if (feedbackList && feedbackList.length > 0) {
-      const total = feedbackList.reduce((sum, item) => sum + Number(item.rating), 0);
+      const total = feedbackList.reduce((sum, item) => sum + (Number(item.rating) || 0), 0);
       return Number((total / feedbackList.length).toFixed(1));
     }
     return 0;

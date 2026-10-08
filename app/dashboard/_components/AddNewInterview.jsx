@@ -43,8 +43,8 @@ const AddNewInterview = () => {
       setError("Resume must be a PDF file.");
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
-      setError("Resume must be under 5MB.");
+    if (file.size > 4 * 1024 * 1024) {
+      setError("Resume must be under 4MB.");
       return;
     }
     setResumeFile(file);
@@ -73,7 +73,7 @@ const AddNewInterview = () => {
         });
       }
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         setError(data.error || "Failed to create interview. Please try again.");
@@ -102,7 +102,7 @@ const AddNewInterview = () => {
         <h2 className="text-center text-lg font-medium">Add New Interview</h2>
       </div>
 
-      <Dialog open={openDialog}>
+      <Dialog open={openDialog} onOpenChange={(open) => !loading && setOpenDialog(open)}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl">
@@ -190,7 +190,7 @@ const AddNewInterview = () => {
                     ) : (
                       <label className="mt-1 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border bg-secondary/30 p-5 text-center text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:bg-secondary/50">
                         <FileText className="h-5 w-5" />
-                        <span>Click to upload your resume (PDF, max 5MB)</span>
+                        <span>Click to upload your resume (PDF, max 4MB)</span>
                         <input
                           type="file"
                           accept="application/pdf"

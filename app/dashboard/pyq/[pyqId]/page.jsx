@@ -51,7 +51,7 @@ const page = ({ params }) => {
         <Accordion type="single" collapsible>
           {questionData.map((item, index) => (
             <AccordionItem value={`item-${index + 1}`} key={index} className="mb-5">
-              <AccordionTrigger className="text-left font-semibold">{item?.Question}?</AccordionTrigger>
+              <AccordionTrigger className="text-left font-semibold">{item?.Question}</AccordionTrigger>
               <AccordionContent className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-md mt-2">
                 {item?.Answer}
               </AccordionContent>

@@ -12,7 +12,8 @@ export const saveQuizResult = async (pointsEarned: number) => {
     throw new Error("Unauthorized");
   }
 
-  const points = Math.max(0, Math.floor(Number(pointsEarned) || 0));
+  // Clamp to the maximum a single game can award so the leaderboard can't be inflated.
+  const points = Math.min(200, Math.max(0, Math.floor(Number(pointsEarned) || 0)));
   const userName = user.firstName || user.username || "Player";
   const userImageSrc = user.imageUrl || "/logo.svg";
 

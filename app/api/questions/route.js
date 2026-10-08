@@ -3,8 +3,9 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/utils/db";
 import { Question } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
+import { generateText, parseAiJson } from "@/utils/GeminiAIModal";
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+export const maxDuration = 60;
 
 export async function POST(request) {
   try {
@@ -43,15 +44,17 @@ export async function POST(request) {
     ]
     `;
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
-
-    const MockQuestionJsonResp = result.response
-      .text()
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
+    let parsed;
+    try {
+      parsed = parseAiJson(await generateText(prompt, { json: true }));
+    } catch {
+      return NextResponse.json({ error: "Failed to parse AI response. Please try again." }, { status: 502 });
+    }
+    if (!Array.isArray(parsed) && Array.isArray(parsed?.questions)) parsed = parsed.questions;
+    if (!Array.isArray(parsed) || !parsed.every((q) => q?.Question && q?.Answer)) {
+      return NextResponse.json({ error: "Invalid AI response format. Please try again." }, { status: 502 });
+    }
+    const MockQuestionJsonResp = JSON.stringify(parsed);
 
     const mockId = uuidv4();
 
@@ -64,7 +67,7 @@ export async function POST(request) {
       jobExperience: jobExperience?.toString() || "0",
       typeQuestion,
       company,
-      createdBy: email,
+      createdBy: email ?? "",
       createdAt: new Date().toISOString().split("T")[0],
     });
 

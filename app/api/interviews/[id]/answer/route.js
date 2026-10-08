@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { connectDB } from "@/utils/db";
-import { UserAnswer } from "@/utils/schema";
-import { createChatSession } from "@/utils/GeminiAIModal";
+import { MockInterview, UserAnswer } from "@/utils/schema";
+import { generateText, parseAiJson } from "@/utils/GeminiAIModal";
 import { rateLimit } from "@/utils/rateLimit";
+
+export const maxDuration = 60;
 
 // POST /api/interviews/[id]/answer — evaluate answer with Gemini and save to DB
 export async function POST(request, { params }) {
@@ -31,6 +33,13 @@ export async function POST(request, { params }) {
       return NextResponse.json({ error: "question and userAns are required" }, { status: 400 });
     }
 
+    await connectDB();
+    const userEmail = user.primaryEmailAddress?.emailAddress ?? "";
+    const interview = await MockInterview.findOne({ mockId: id, createdBy: userEmail }).lean();
+    if (!interview) {
+      return NextResponse.json({ error: "Interview not found" }, { status: 404 });
+    }
+
     // Build Gemini feedback prompt
     const feedbackPrompt = `Question: ${question}
 User Answer: ${userAns}
@@ -43,18 +52,11 @@ Respond in this exact JSON format:
   "feedback": "Your feedback here."
 }`;
 
-    const session = createChatSession();
-    const aiResult = await session.sendMessage(feedbackPrompt);
-    let responseText = aiResult.response.text();
-
-    const cleanedResponse = responseText
-      .replace(/```json/gi, "")
-      .replace(/```/g, "")
-      .trim();
+    const responseText = await generateText(feedbackPrompt, { json: true });
 
     let feedbackJson;
     try {
-      feedbackJson = JSON.parse(cleanedResponse);
+      feedbackJson = parseAiJson(responseText);
     } catch {
       return NextResponse.json(
         { error: "Failed to parse AI feedback. Please try again." },
@@ -62,20 +64,21 @@ Respond in this exact JSON format:
       );
     }
 
-    await connectDB();
-    const userEmail = user.primaryEmailAddress?.emailAddress ?? "";
     const createdAt = new Date().toISOString().split("T")[0];
+    const rating = parseFloat(feedbackJson?.rating);
 
-    await UserAnswer.create({
-      mockIdRef: id,
-      question,
-      correctAns: correctAns ?? "",
-      userAns,
-      feedback: feedbackJson?.feedback ?? "",
-      rating: String(feedbackJson?.rating ?? "0"),
-      userEmail,
-      createdAt,
-    });
+    // Upsert so re-recording a question replaces the earlier answer instead of duplicating it.
+    await UserAnswer.findOneAndUpdate(
+      { mockIdRef: id, question, userEmail },
+      {
+        correctAns: correctAns ?? "",
+        userAns,
+        feedback: feedbackJson?.feedback ?? "",
+        rating: String(Number.isFinite(rating) ? rating : 0),
+        createdAt,
+      },
+      { upsert: true }
+    );
 
     return NextResponse.json({
       feedback: feedbackJson.feedback,

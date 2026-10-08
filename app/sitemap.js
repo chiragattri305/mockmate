@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = "https://mockmate.vercel.app"; // Update this with your actual production domain
+  const baseUrl = "https://mockmate-ten-lac.vercel.app";
 
   return [
     {

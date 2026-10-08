@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { Toaster } from "@/components/ui/sonner"
 import Header from "./_components/Header";
 import { createContext, useState } from "react";
 export const WebCamContext = createContext();
@@ -10,7 +9,6 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div>
-      <Toaster />
       <Header />
       <div className="mx-5 md:mx-20 lg:mx-36">
         <WebCamContext.Provider value={{ webCamEnabled, setWebCamEnabled }}>

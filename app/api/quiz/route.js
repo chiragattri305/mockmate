@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { createChatSession } from "@/utils/GeminiAIModal";
+import { generateText, parseAiJson } from "@/utils/GeminiAIModal";
 import { rateLimit } from "@/utils/rateLimit";
 import { QUIZ_TOPIC_NAMES } from "@/utils/quizTopics";
+
+export const maxDuration = 60;
 
 // POST /api/quiz — generate multiple-choice interview questions for a topic
 export async function POST(request) {
@@ -40,22 +42,17 @@ Respond with ONLY a valid JSON array in this exact shape (no markdown):
 ]
 "answer" is the zero-based index (0-3) of the correct option.`;
 
-    const session = createChatSession();
-    const aiResult = await session.sendMessage(prompt);
-    const cleaned = aiResult.response
-      .text()
-      .replace(/```json/gi, "")
-      .replace(/```/g, "")
-      .trim();
+    const aiText = await generateText(prompt, { json: true });
 
     let questions;
     try {
-      questions = JSON.parse(cleaned);
+      questions = parseAiJson(aiText);
     } catch {
       return NextResponse.json({ error: "Failed to parse AI response. Try again." }, { status: 502 });
     }
 
     // Validate and normalize
+    if (!Array.isArray(questions) && Array.isArray(questions?.questions)) questions = questions.questions;
     const valid = Array.isArray(questions)
       ? questions.filter(
           (q) =>

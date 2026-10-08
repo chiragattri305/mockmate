@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateText } from "@/utils/GeminiAIModal";
+
+export const maxDuration = 60;
 
 // POST /api/transcribe — transcribe audio blob via Gemini multimodal
 export async function POST(request) {
@@ -21,15 +23,15 @@ export async function POST(request) {
     const arrayBuffer = await audioFile.arrayBuffer();
     const base64Audio = Buffer.from(arrayBuffer).toString("base64");
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    // Safari records audio/mp4, Chrome/Firefox audio/webm — pass through what the browser sent.
+    const mimeType = (audioFile.type || "audio/webm").split(";")[0];
 
-    const result = await model.generateContent([
-      "Transcribe the following audio accurately. Return only the transcribed text with no additional commentary.",
-      { inlineData: { data: base64Audio, mimeType: "audio/webm" } },
+    const text = await generateText([
+      { text: "Transcribe the following audio accurately. Return only the transcribed text with no additional commentary." },
+      { inlineData: { data: base64Audio, mimeType } },
     ]);
 
-    const transcription = result.response.text().trim();
+    const transcription = text.trim();
     return NextResponse.json({ transcription });
   } catch (error) {
     console.error("[POST /api/transcribe]", error);

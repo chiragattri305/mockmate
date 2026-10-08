@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
@@ -16,6 +17,8 @@ const RecordAnswerSection = ({
   const [userAnswer, setUserAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [showTyping, setShowTyping] = useState(false);
+  const [typedAnswer, setTypedAnswer] = useState("");
   const { webCamEnabled, setWebCamEnabled } = useContext(WebCamContext);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -23,11 +26,15 @@ const RecordAnswerSection = ({
   // Reset answer when question changes
   useEffect(() => {
     setUserAnswer("");
+    setTypedAnswer("");
   }, [activeQuestionIndex]);
 
   const saveAnswer = useCallback(async (answer) => {
-    if (!answer || answer.trim().length <= 10) return;
-    if (!interviewData?.mockId || !mockInterviewQuestion?.[activeQuestionIndex]) return;
+    if (!answer || answer.trim().length <= 10) {
+      toast.error("Answer too short. Please give a more detailed answer and try again.");
+      return false;
+    }
+    if (!interviewData?.mockId || !mockInterviewQuestion?.[activeQuestionIndex]) return false;
 
     try {
       setLoading(true);
@@ -42,14 +49,16 @@ const RecordAnswerSection = ({
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to save answer");
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to save answer. Please try again.");
       }
 
       toast.success("Answer recorded successfully!");
       setUserAnswer("");
+      return true;
     } catch (err) {
       toast.error(err.message || "An error occurred while saving your answer.");
+      return false;
     } finally {
       setLoading(false);
     }
@@ -60,7 +69,8 @@ const RecordAnswerSection = ({
       setLoading(true);
       // Convert blob to base64 and send to a transcription endpoint
       const formData = new FormData();
-      formData.append("audio", audioBlob, "recording.webm");
+      const ext = audioBlob.type.includes("mp4") ? "mp4" : "webm";
+      formData.append("audio", audioBlob, `recording.${ext}`);
 
       const res = await fetch("/api/transcribe", {
         method: "POST",
@@ -92,7 +102,8 @@ const RecordAnswerSection = ({
       };
 
       mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const mimeType = mediaRecorderRef.current?.mimeType || "audio/webm";
+        const audioBlob = new Blob(chunksRef.current, { type: mimeType });
         // Stop all tracks to release the mic
         stream.getTracks().forEach((t) => t.stop());
         await transcribeAudio(audioBlob);
@@ -158,6 +169,36 @@ const RecordAnswerSection = ({
             "Record Answer"
           )}
         </Button>
+      </div>
+
+      <div className="mt-4 w-full max-w-[30rem] text-center">
+        {!showTyping ? (
+          <button
+            type="button"
+            className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            onClick={() => setShowTyping(true)}
+          >
+            No microphone? Type your answer instead
+          </button>
+        ) : (
+          <div className="flex flex-col gap-2">
+            <Textarea
+              rows={4}
+              placeholder="Type your answer here..."
+              value={typedAnswer}
+              onChange={(e) => setTypedAnswer(e.target.value)}
+              disabled={loading}
+            />
+            <Button
+              onClick={async () => {
+                if (await saveAnswer(typedAnswer)) setTypedAnswer("");
+              }}
+              disabled={loading || isRecording}
+            >
+              {loading ? "Saving..." : "Submit Typed Answer"}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
