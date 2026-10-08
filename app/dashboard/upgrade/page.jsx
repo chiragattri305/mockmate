@@ -41,7 +41,7 @@ const Upgrade = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5 text-indigo-700"
+                    className="size-5 text-accent"
                   >
                     <path
                       strokeLinecap="round"
@@ -60,7 +60,7 @@ const Upgrade = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5 text-indigo-700"
+                    className="size-5 text-accent"
                   >
                     <path
                       strokeLinecap="round"
@@ -79,7 +79,7 @@ const Upgrade = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5 text-indigo-700"
+                    className="size-5 text-accent"
                   >
                     <path
                       strokeLinecap="round"
@@ -98,7 +98,7 @@ const Upgrade = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-5 text-indigo-700"
+                    className="size-5 text-accent"
                   >
                     <path
                       strokeLinecap="round"
@@ -118,7 +118,7 @@ const Upgrade = () => {
                   user?.primaryEmailAddress?.emailAddress
                 }
                 target="_blank"
-                className="mt-8 block rounded-full border border-foreground bg-background px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+                className="mt-8 block rounded-full border border-foreground bg-background px-12 py-3 text-center text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Get Started
               </a>

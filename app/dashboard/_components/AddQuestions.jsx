@@ -65,17 +65,24 @@ const AddQuestions = () => {
 
   return (
     <div>
-      <div
-        className="p-10 rounded-lg border bg-secondary hover:scale-105 hover:shadow-sm transition-all cursor-pointer"
+      <button
+        type="button"
+        className="group flex h-full min-h-[150px] w-full cursor-pointer flex-col justify-between rounded-2xl bg-foreground p-5 text-left text-background transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         onClick={() => setOpenDialog(true)}
       >
-        <h2 className="text-lg text-center">+ Add New Questions</h2>
-      </div>
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-foreground text-xl transition-transform duration-200 group-hover:rotate-90">
+          +
+        </span>
+        <span>
+          <span className="block font-display text-xl">New question set</span>
+          <span className="mt-0.5 block text-sm opacity-70">Role, company &amp; question type</span>
+        </span>
+      </button>
 
       <Dialog open={openDailog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>What model questions are you seeking?</DialogTitle>
+            <DialogTitle className="font-display text-2xl font-normal">What questions are you preparing for?</DialogTitle>
             <DialogDescription asChild>
               <form onSubmit={onSubmit}>
                 <div className="my-3 text-foreground">
@@ -85,7 +92,7 @@ const AddQuestions = () => {
                   </h2>
 
                   <div className="mt-7 my-3">
-                    <label className="text-foreground">Job Role / Job Position</label>
+                    <label className="text-sm font-medium text-foreground">Job Role / Job Position</label>
                     <Input
                       className="mt-1"
                       value={jobPosition}
@@ -95,7 +102,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-foreground">
+                    <label className="text-sm font-medium text-foreground">
                       Job Description / Tech stack (In Short)
                     </label>
                     <Textarea
@@ -107,7 +114,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-foreground">
+                    <label className="text-sm font-medium text-foreground">
                       Type of Questions (In Short)
                     </label>
                     <Input
@@ -119,7 +126,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-foreground">
+                    <label className="text-sm font-medium text-foreground">
                       Company you are seeking
                     </label>
                     <Input
@@ -131,7 +138,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-foreground">Years of Experience</label>
+                    <label className="text-sm font-medium text-foreground">Years of Experience</label>
                     <Input
                       className="mt-1"
                       placeholder="Ex. 5"

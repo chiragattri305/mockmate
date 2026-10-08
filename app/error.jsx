@@ -12,7 +12,7 @@ export default function GlobalError({ error, reset }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-6">
       <h1 className="text-5xl font-bold text-red-500">Something went wrong</h1>
-      <p className="text-gray-500 mt-3 max-w-md">
+      <p className="text-muted-foreground mt-3 max-w-md">
         An unexpected error occurred. You can try again or go back to the dashboard.
       </p>
       <div className="flex gap-4 mt-6">

@@ -19,8 +19,8 @@ const Leaderboard = async () => {
   return (
     <div className="mx-auto max-w-2xl py-8">
       <div className="mb-6 text-center">
-        <h1 className="flex items-center justify-center gap-2 text-3xl font-bold tracking-tight">
-          <Trophy className="h-7 w-7 text-amber-500" /> Leaderboard
+        <h1 className="flex items-center justify-center gap-2 font-display text-3xl md:text-4xl">
+          <Trophy className="h-7 w-7 text-accent" /> Leaderboard
         </h1>
         <p className="mt-1 text-muted-foreground">Top players in the AI Quiz Arena</p>
         <div className="mt-4">

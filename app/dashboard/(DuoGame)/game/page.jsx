@@ -39,7 +39,7 @@ const START_HEARTS = 5;
 const POINTS_PER_CORRECT = 10;
 
 // Brand logos (with brand colors) for each topic; conceptual topics use accent-colored icons.
-const ACCENT = "#2563eb";
+const ACCENT = "#E0451F";
 const TOPIC_META = {
   "JavaScript": { Icon: SiJavascript, color: "#F7DF1E" },
   "React": { Icon: SiReact, color: "#61DAFB" },
@@ -152,7 +152,7 @@ const QuizArena = () => {
           <div className="glass-card mx-auto mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground">
             <Sparkles className="h-4 w-4 text-accent" /> AI-generated questions
           </div>
-          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">AI Quiz Arena</h1>
+          <h1 className="font-display text-3xl md:text-4xl">AI Quiz Arena</h1>
           <p className="mx-auto mt-2 max-w-xl text-muted-foreground">
             Pick a topic and race through AI-generated interview questions. Answer
             correctly to earn points and keep your hearts. Climb the leaderboard!
@@ -211,7 +211,7 @@ const QuizArena = () => {
       <div className="mx-auto max-w-lg py-12">
         <div className="glass-card rounded-3xl p-8 text-center">
           <Trophy className="mx-auto mb-3 h-14 w-14 text-amber-500" />
-          <h2 className="text-2xl font-bold">
+          <h2 className="font-display text-2xl">
             {hearts > 0 ? "Quiz Complete!" : "Out of Hearts!"}
           </h2>
           <p className="mt-1 text-muted-foreground">Topic: {topic}</p>
