@@ -1,6 +1,7 @@
 import React from 'react'
 import Contect from './_components/Contect';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { ArrowRight, Check, SkipForward, Circle, Mic } from 'lucide-react';
 
 export const metadata = {
@@ -52,11 +53,8 @@ const page = () => {
         {/* Header */}
         <header className="glass-nav sticky top-0 z-50 w-full">
           <div className="mx-auto flex w-[90%] max-w-6xl items-center justify-between py-3">
-            <Link href="/" className="flex items-center gap-2 font-display text-xl">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground font-sans text-sm font-bold text-background">
-                M
-              </span>
-              MockMate
+            <Link href="/" aria-label="MockMate home">
+              <Logo />
             </Link>
             <nav className="flex items-center gap-1 sm:gap-2">
               <a href="#how" className={navLink}>How it works</a>

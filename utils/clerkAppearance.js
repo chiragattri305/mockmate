@@ -2,7 +2,7 @@
 // into our glassmorphism auth card instead of looking like a boxed third-party form.
 export const clerkAppearance = {
   variables: {
-    colorPrimary: "#2563eb",
+    colorPrimary: "#1C1916",
     borderRadius: "0.75rem",
     fontFamily: "inherit",
   },
@@ -11,7 +11,7 @@ export const clerkAppearance = {
     cardBox: "w-full shadow-none border-0 bg-transparent",
     card: "bg-transparent shadow-none border-0 p-0 w-full",
     header: "text-left",
-    headerTitle: "text-2xl font-bold tracking-tight",
+    headerTitle: "font-display text-2xl font-normal",
     headerSubtitle: "text-muted-foreground",
     socialButtonsBlockButton: "rounded-full border border-border hover:bg-secondary normal-case",
     formButtonPrimary: "rounded-full normal-case font-medium shadow-sm",

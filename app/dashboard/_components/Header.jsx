@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard" },
@@ -41,11 +42,8 @@ const Header = () => {
   return (
     <div className="glass-nav sticky top-0 z-50">
       <div className="m-auto flex w-[90%] max-w-7xl items-center justify-between gap-4 py-3">
-        <Link href="/dashboard" className="flex items-center gap-2 font-display text-xl">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground font-sans text-sm font-bold text-background">
-            M
-          </span>
-          MockMate
+        <Link href="/dashboard" aria-label="MockMate dashboard">
+          <Logo />
         </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">
