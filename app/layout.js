@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import {
   ClerkProvider
@@ -6,7 +6,13 @@ import {
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/ThemeProvider.tsx"
 
-const font = Inter({ subsets: ["latin"], display: "swap" });
+const sans = Inter({ subsets: ["latin"], display: "swap", variable: "--font-sans" });
+const display = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+  axes: ["opsz", "SOFT"],
+});
 
 export const metadata = {
   title: {
@@ -23,8 +29,8 @@ export default function RootLayout({ children }) {
   return (
 
     <ClerkProvider >
-      <html lang="en">
-        <body className={font.className}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${sans.variable} ${display.variable} font-sans`}>
           <Toaster />
           <ThemeProvider
             attribute="class"

@@ -22,9 +22,9 @@ import {
 } from "recharts";
 
 const ratingColor = (rating) => {
-  if (rating >= 7) return "#22c55e";
-  if (rating >= 4) return "#f59e0b";
-  return "#ef4444";
+  if (rating >= 7) return "#16a34a";
+  if (rating >= 4) return "#d97706";
+  return "#dc2626";
 };
 
 const Feedback = ({ params }) => {
@@ -73,7 +73,7 @@ const Feedback = ({ params }) => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-4 sm:p-6 md:p-10">
+    <div className="mx-auto max-w-5xl py-8 md:py-12">
       {feedbackList.length === 0 ? (
         <h2 className="my-5 text-xl font-semibold text-muted-foreground">
           No interview feedback record found.
@@ -82,12 +82,11 @@ const Feedback = ({ params }) => {
         <>
           {/* Header */}
           <div className="mb-8">
-            <h2 className="flex items-center gap-2 text-3xl font-bold text-gradient">
-              <Trophy className="h-7 w-7 text-amber-500" />
-              Congratulations!
-            </h2>
-            <p className="mt-1 text-lg font-medium">Here is your interview feedback</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="eyebrow flex items-center gap-2">
+              <Trophy className="h-4 w-4 text-accent" /> Interview report
+            </p>
+            <h1 className="mt-2 font-display text-3xl md:text-4xl">Here&apos;s how you did</h1>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
               Review your overall performance, then expand each question to see your
               answer, the ideal answer, and tailored feedback.
             </p>
@@ -195,8 +194,8 @@ const Feedback = ({ params }) => {
           </div>
 
           {/* Detailed feedback */}
-          <h3 className="mb-2 mt-8 flex items-center gap-2 text-lg font-semibold">
-            <Star className="h-5 w-5 text-amber-500" /> Detailed feedback
+          <h3 className="mb-2 mt-10 flex items-center gap-2 font-display text-2xl">
+            <Star className="h-5 w-5 text-accent" /> Detailed feedback
           </h3>
           {feedbackList.map((item, index) => (
             <Collapsible key={index} className="mt-3">
@@ -212,15 +211,15 @@ const Feedback = ({ params }) => {
                     </strong>
                     {item.rating}/10
                   </div>
-                  <div className="rounded-xl border border-red-200 bg-red-50/70 p-3 text-sm text-red-900">
+                  <div className="rounded-xl border-l-4 border-l-muted-foreground/40 bg-secondary p-3 text-sm">
                     <strong>Your Answer: </strong>
                     {item.userAns}
                   </div>
-                  <div className="rounded-xl border border-green-200 bg-green-50/70 p-3 text-sm text-green-900">
+                  <div className="rounded-xl border-l-4 border-l-success bg-success/10 p-3 text-sm">
                     <strong>Ideal Answer: </strong>
                     {item.correctAns}
                   </div>
-                  <div className="rounded-xl border border-blue-200 bg-blue-50/70 p-3 text-sm text-blue-900">
+                  <div className="rounded-xl border-l-4 border-l-accent bg-accent/10 p-3 text-sm">
                     <strong>Feedback: </strong>
                     {item.feedback}
                   </div>
@@ -230,9 +229,12 @@ const Feedback = ({ params }) => {
           ))}
         </>
       )}
-      <Button className="mt-8" onClick={() => router.replace("/dashboard")}>
-        Go Home
-      </Button>
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Button onClick={() => router.replace("/dashboard")}>Back to dashboard</Button>
+        <Button variant="outline" onClick={() => router.push(`/dashboard/interview/${params.interviewId}/start`)}>
+          Continue answering
+        </Button>
+      </div>
     </div>
   );
 };

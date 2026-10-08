@@ -10,7 +10,7 @@ export default function DashboardError({ error, reset }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
       <h2 className="text-2xl font-bold text-red-500">Something went wrong!</h2>
-      <p className="text-gray-500 mt-2 max-w-sm">
+      <p className="text-muted-foreground mt-2 max-w-sm">
         {error?.message || "An unexpected error occurred. Please try again."}
       </p>
       <div className="flex gap-4 mt-6">

@@ -16,18 +16,18 @@ const Upgrade = () => {
               className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12"
             >
               <div className="text-center">
-                <h2 className="text-lg font-medium text-gray-900">
+                <h2 className="text-lg font-medium text-foreground">
                   {item.duration}
                   <span className="sr-only">Plan</span>
                 </h2>
 
                 <p className="mt-2 sm:mt-4">
-                  <strong className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                  <strong className="text-3xl font-bold text-foreground sm:text-4xl">
                     {" "}
                     {item.price}${" "}
                   </strong>
 
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-muted-foreground">
                     / {item.duration}
                   </span>
                 </p>
@@ -50,7 +50,7 @@ const Upgrade = () => {
                     />
                   </svg>
 
-                  <span className="text-gray-700"> 10 users included </span>
+                  <span className="text-muted-foreground"> 10 users included </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -69,7 +69,7 @@ const Upgrade = () => {
                     />
                   </svg>
 
-                  <span className="text-gray-700"> 2GB of storage </span>
+                  <span className="text-muted-foreground"> 2GB of storage </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -88,7 +88,7 @@ const Upgrade = () => {
                     />
                   </svg>
 
-                  <span className="text-gray-700"> Email support </span>
+                  <span className="text-muted-foreground"> Email support </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -107,7 +107,7 @@ const Upgrade = () => {
                     />
                   </svg>
 
-                  <span className="text-gray-700"> Help center access </span>
+                  <span className="text-muted-foreground"> Help center access </span>
                 </li>
               </ul>
 
@@ -118,7 +118,7 @@ const Upgrade = () => {
                   user?.primaryEmailAddress?.emailAddress
                 }
                 target="_blank"
-                className="mt-8 block rounded-full border border-indigo-600 bg-white px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+                className="mt-8 block rounded-full border border-foreground bg-background px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
               >
                 Get Started
               </a>

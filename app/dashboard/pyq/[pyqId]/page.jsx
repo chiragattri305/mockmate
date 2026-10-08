@@ -52,14 +52,14 @@ const page = ({ params }) => {
           {questionData.map((item, index) => (
             <AccordionItem value={`item-${index + 1}`} key={index} className="mb-5">
               <AccordionTrigger className="text-left font-semibold">{item?.Question}</AccordionTrigger>
-              <AccordionContent className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-md mt-2">
+              <AccordionContent className="text-muted-foreground leading-relaxed bg-secondary p-4 rounded-md mt-2">
                 {item?.Answer}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       ) : (
-        <div className="text-center text-gray-500 py-10">No questions data available.</div>
+        <div className="text-center text-muted-foreground py-10">No questions data available.</div>
       )}
     </div>
   );

@@ -78,14 +78,14 @@ const AddQuestions = () => {
             <DialogTitle>What model questions are you seeking?</DialogTitle>
             <DialogDescription asChild>
               <form onSubmit={onSubmit}>
-                <div className="my-3 text-black">
+                <div className="my-3 text-foreground">
                   <h2>
                     Add Details about your job position, job description and
                     years of experience
                   </h2>
 
                   <div className="mt-7 my-3">
-                    <label className="text-black">Job Role / Job Position</label>
+                    <label className="text-foreground">Job Role / Job Position</label>
                     <Input
                       className="mt-1"
                       value={jobPosition}
@@ -95,7 +95,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
+                    <label className="text-foreground">
                       Job Description / Tech stack (In Short)
                     </label>
                     <Textarea
@@ -107,7 +107,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
+                    <label className="text-foreground">
                       Type of Questions (In Short)
                     </label>
                     <Input
@@ -119,7 +119,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
+                    <label className="text-foreground">
                       Company you are seeking
                     </label>
                     <Input
@@ -131,7 +131,7 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">Years of Experience</label>
+                    <label className="text-foreground">Years of Experience</label>
                     <Input
                       className="mt-1"
                       placeholder="Ex. 5"

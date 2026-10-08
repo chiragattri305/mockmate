@@ -92,21 +92,25 @@ const AddNewInterview = () => {
 
   return (
     <div>
-      <div
-        className="glass-card group flex min-h-[150px] cursor-pointer flex-col items-center justify-center rounded-2xl p-10 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+      <button
+        type="button"
+        className="group flex h-full min-h-[150px] w-full cursor-pointer flex-col justify-between rounded-2xl bg-foreground p-5 text-left text-background transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         onClick={() => setOpenDialog(true)}
       >
-        <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
-          <Plus className="h-6 w-6" />
-        </div>
-        <h2 className="text-center text-lg font-medium">Add New Interview</h2>
-      </div>
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-foreground transition-transform duration-200 group-hover:rotate-90">
+          <Plus className="h-5 w-5" />
+        </span>
+        <span>
+          <span className="block font-display text-xl">New interview</span>
+          <span className="mt-0.5 block text-sm opacity-70">Role, stack &amp; optional resume</span>
+        </span>
+      </button>
 
       <Dialog open={openDialog} onOpenChange={(open) => !loading && setOpenDialog(open)}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl">
-              Tell us more about your job interview
+            <DialogTitle className="font-display text-2xl font-normal">
+              Tell us about the role
             </DialogTitle>
             <DialogDescription asChild>
               <form onSubmit={onSubmit}>
@@ -118,13 +122,13 @@ const AddNewInterview = () => {
                   </p>
 
                   {error && (
-                    <div className="mt-4 rounded-lg border border-red-400 bg-red-100/80 p-3 text-red-700">
+                    <div className="mt-4 rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
                       {error}
                     </div>
                   )}
 
                   <div className="my-3 mt-7">
-                    <label className="text-foreground">Job Role/Job Position</label>
+                    <label className="text-sm font-medium text-foreground">Job Role/Job Position</label>
                     <Input
                       className="mt-1"
                       placeholder="Ex. Full Stack Developer"
@@ -137,11 +141,11 @@ const AddNewInterview = () => {
                     />
                   </div>
                   <div className="my-5">
-                    <label className="text-foreground">
+                    <label className="text-sm font-medium text-foreground">
                       Job Description/Tech Stack (In Short)
                     </label>
                     <Textarea
-                      className="placeholder-opacity-50"
+                      className="mt-1"
                       placeholder="Ex. React, Angular, Node.js, MySQL, NoSQL, Python"
                       value={jobDesc}
                       required
@@ -152,7 +156,7 @@ const AddNewInterview = () => {
                     />
                   </div>
                   <div className="my-5">
-                    <label className="text-foreground">Years of Experience</label>
+                    <label className="text-sm font-medium text-foreground">Years of Experience</label>
                     <Input
                       className="mt-1"
                       placeholder="Ex. 5"
@@ -169,13 +173,13 @@ const AddNewInterview = () => {
                   </div>
 
                   <div className="my-5">
-                    <label className="text-foreground">
+                    <label className="text-sm font-medium text-foreground">
                       Resume (PDF, optional)
                     </label>
                     {resumeFile ? (
                       <div className="mt-1 flex items-center justify-between rounded-lg border border-border bg-secondary/60 p-3">
                         <span className="flex items-center gap-2 text-sm text-foreground">
-                          <FileText className="h-4 w-4 text-primary" />
+                          <FileText className="h-4 w-4 text-accent" />
                           {resumeFile.name}
                         </span>
                         <button
@@ -188,7 +192,7 @@ const AddNewInterview = () => {
                         </button>
                       </div>
                     ) : (
-                      <label className="mt-1 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border bg-secondary/30 p-5 text-center text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:bg-secondary/50">
+                      <label className="mt-1 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border bg-secondary/30 p-5 text-center text-sm text-muted-foreground transition-colors hover:border-accent/60 hover:bg-secondary/50">
                         <FileText className="h-5 w-5" />
                         <span>Click to upload your resume (PDF, max 4MB)</span>
                         <input
@@ -215,8 +219,8 @@ const AddNewInterview = () => {
                   <Button type="submit" disabled={loading}>
                     {loading ? (
                       <>
-                        <LoaderCircle className="mr-2 animate-spin" />
-                        Generating From AI
+                        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                        Preparing questions…
                       </>
                     ) : (
                       "Start Interview"

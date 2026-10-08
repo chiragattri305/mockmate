@@ -30,19 +30,25 @@ const Header = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const isActive = (href) =>
+    href === "/dashboard" ? path === href || path.startsWith("/dashboard/interview") : path.startsWith(href);
+
   const linkClass = (href) =>
-    `text-sm font-medium transition-colors cursor-pointer ${
-      path === href ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+    `rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-150 cursor-pointer ${
+      isActive(href) ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"
     }`;
 
   return (
     <div className="glass-nav sticky top-0 z-50">
       <div className="m-auto flex w-[90%] max-w-7xl items-center justify-between gap-4 py-3">
-        <Link href="/dashboard" className="text-xl font-bold tracking-tight">
-          Mock<span className="text-accent">Mate</span>
+        <Link href="/dashboard" className="flex items-center gap-2 font-display text-xl">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-foreground font-sans text-sm font-bold text-background">
+            M
+          </span>
+          MockMate
         </Link>
 
-        <ul className="hidden gap-7 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
               <li className={linkClass(item.href)}>{item.label}</li>
@@ -68,20 +74,20 @@ const Header = () => {
           )}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-black/5 hover:text-foreground md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-foreground lg:hidden"
           >
-            <span className="sr-only">Open main menu</span>
+            <span className="sr-only">Toggle menu</span>
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
       {isOpen && (
-        <div className="md:hidden">
-          <ul className="space-y-1 px-6 pb-4 pt-2">
+        <div className="border-t lg:hidden">
+          <ul className="m-auto flex w-[90%] flex-col gap-1 py-3">
             {navItems.map((item) => (
               <Link key={item.href} href={item.href} onClick={() => setIsOpen(false)}>
-                <li className={`py-1.5 ${linkClass(item.href)}`}>{item.label}</li>
+                <li className={`block py-2 ${linkClass(item.href)}`}>{item.label}</li>
               </Link>
             ))}
           </ul>

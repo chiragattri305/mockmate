@@ -48,14 +48,16 @@ const Contect = () => {
   };
 
   return (
-    <div className="container mx-auto px-2 text-center">
-      <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Get In Touch</h2>
-      <p className="mt-4 text-lg text-muted-foreground">
-        Have any questions? Reach out to us and we&apos;ll get back to you as
-        soon as possible.
-      </p>
-      <div className="mt-8">
-        <form onSubmit={onSubmit} className="max-w-xl mx-auto flex flex-col gap-4 text-left">
+    <div className="mx-auto grid w-[90%] max-w-6xl gap-10 lg:grid-cols-[1fr_2fr]">
+      <div>
+        <p className="eyebrow">Contact</p>
+        <h2 className="mt-3 font-display text-3xl md:text-4xl">Get in touch</h2>
+        <p className="mt-3 text-muted-foreground">
+          Questions or feedback? Send a message and we&apos;ll get back to you as soon as possible.
+        </p>
+      </div>
+      <div className="glass-card rounded-2xl p-6 md:p-8">
+        <form onSubmit={onSubmit} className="flex flex-col gap-4 text-left">
           <div className="flex flex-col gap-1">
             <Label htmlFor="contact-name">Your Name</Label>
             <Input

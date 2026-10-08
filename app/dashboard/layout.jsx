@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div>
       <Header />
-      <div className="mx-5 md:mx-20 lg:mx-36">
+      <div className="m-auto w-[90%] max-w-7xl pb-16">
         <WebCamContext.Provider value={{ webCamEnabled, setWebCamEnabled }}>
           {children}
         </WebCamContext.Provider>
